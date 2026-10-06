@@ -1,0 +1,14 @@
+﻿using TicTacToe.Api.Models.Enums;
+
+namespace TicTacToe.Api.Models.Domain;
+
+public class Move
+{
+    public int MoveNumber { get; set; }
+
+    public Player Player { get; set; }
+
+    public int Row { get; set; }
+
+    public int Column { get; set; }
+}
