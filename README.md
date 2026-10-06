@@ -633,40 +633,23 @@ Potential future enhancements include:
 
 ### Main Screen
 
-```text
 <img width="1646" height="1080" alt="image" src="https://github.com/user-attachments/assets/e9369aa6-c03f-4205-874d-773433ab0ef7" />
-
-```
 
 ### Two Player Mode
 
-```text
 <img width="1646" height="1080" alt="image" src="https://github.com/user-attachments/assets/b08d3a82-7258-493b-9620-10fb00afcbf3" />
-
-```
 
 ### Computer Mode
 
-```text
 <img width="1641" height="1067" alt="image" src="https://github.com/user-attachments/assets/9fecc853-ac92-4dc9-8cbc-51a4c291a431" />
-
-```
 
 ### Winner Highlight
 
-```text
 <img width="1643" height="1026" alt="image" src="https://github.com/user-attachments/assets/0d5e1637-6fd1-4404-9b69-6d397794159b" />
-
-```
 
 ### Move History And Scoreboard
 
-```text
 <img width="1646" height="1026" alt="image" src="https://github.com/user-attachments/assets/826e2323-4b00-42c0-9a4a-5d5682c01f8b" />
-
-```
-
----
 
 ## Submission Checklist
 
