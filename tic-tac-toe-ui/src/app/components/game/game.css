@@ -1,0 +1,300 @@
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+}
+
+.page {
+  min-height: 100vh;
+  background: #f4f6f9;
+  padding: 12px;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto 20px auto;
+}
+
+.header h1 {
+  margin: 0 0 10px;
+  color: #1e293b;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.top-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.top-bar select {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-width: 220px;
+  background: white;
+}
+
+.error-message {
+  margin-top: 12px;
+  background: #ef4444;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+/* Main page layout */
+
+.content {
+  max-width: 1200px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+}
+
+/* Cards */
+
+.status-card,
+.scoreboard-card,
+.history-card,
+.board-container {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Status */
+
+.status-card {
+  margin-bottom: 20px;
+}
+
+.status-card h3 {
+  margin: 0;
+}
+
+.status-card span {
+  color: #2563eb;
+}
+
+.winner {
+  color: #16a34a;
+}
+
+.draw {
+  color: #ea580c;
+}
+
+/* Board */
+
+.board-container {
+  padding: 16px;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.board-row {
+  display: flex;
+  gap: 8px;
+}
+
+.cell {
+  width: 90px;
+  height: 90px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #e2e8f0;
+
+  cursor: pointer;
+
+  font-size: 42px;
+  font-weight: bold;
+
+  transition: all 0.2s ease;
+}
+
+.cell:hover {
+  background: #cbd5e1;
+  transform: scale(1.03);
+}
+
+.cell:disabled {
+  cursor: not-allowed;
+}
+
+.winning-cell {
+  background: #22c55e !important;
+  color: white;
+}
+
+/* Action Buttons */
+
+.action-buttons {
+  margin-top: 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.primary-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.primary-btn:hover {
+  background: #1d4ed8;
+}
+
+.secondary-btn {
+  background: #475569;
+  color: white;
+}
+
+.secondary-btn:hover {
+  background: #334155;
+}
+
+.secondary-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.danger-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.danger-btn:hover {
+  background: #b91c1c;
+}
+
+/* Scoreboard */
+
+.scoreboard-card h3 {
+  margin-top: 0;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.score-item:last-child {
+  border-bottom: none;
+}
+
+.score-item strong {
+  font-size: 20px;
+}
+
+/* History */
+
+.history-card {
+  margin-top: 20px;
+}
+
+.history-card h3 {
+  margin-top: 0;
+}
+
+.history-table {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f1f5f9;
+  position: sticky;
+  top: 0;
+}
+
+th,
+td {
+  border: 1px solid #e5e7eb;
+  padding: 10px;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+/* Responsive */
+
+@media (max-width: 1050px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .right-panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .cell {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-bar select,
+  .top-bar button {
+    width: 100%;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+}

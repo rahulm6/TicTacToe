@@ -1,3 +1,11 @@
+# Angular
+node_modules/
+dist/
+.angular/
+
+# Visual Studio
+.vs/
+
+# Build
 bin/
 obj/
-.vs/

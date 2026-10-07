@@ -1,0 +1,190 @@
+<div class="board-container">
+    <div class="board">
+        <div class="page">
+
+  <div class="header">
+    <h1>Tic Tac Toe</h1>
+
+    <div class="top-bar">
+
+      <select (change)="onModeChange($event)">
+        <option value="1">Two Player</option>
+        <option value="2">Play Against Computer</option>
+      </select>
+
+      <button class="primary-btn"
+              (click)="createGame()">
+        New Game
+      </button>
+
+    </div>
+
+    @if(errorMessage()) {
+      <div class="error-message">
+        {{ errorMessage() }}
+      </div>
+    }
+
+  </div>
+
+  @if(game(); as game) {
+
+  <div class="content">
+
+    <div class="left-panel">
+
+      <div class="status-card">
+
+        @if(game.status === 1) {
+        <h3>
+          Current Turn:
+          <span>{{ currentPlayerText() }}</span>
+        </h3>
+        }
+
+        @if(game.status === 2) {
+        <h3 class="winner">
+          Winner:
+          {{ winnerText() }}
+        </h3>
+        }
+
+        @if(game.status === 3) {
+        <h3 class="draw">
+          Draw Game
+        </h3>
+        }
+
+      </div>
+
+      <div class="board">
+
+        @for(row of [0,1,2]; track row) {
+
+        <div class="board-row">
+
+          @for(col of [0,1,2]; track col) {
+
+          <button
+            class="cell"
+            [class.winning-cell]="isWinningCell(row,col)"
+            (click)="makeMove(row,col)">
+
+            {{ game.board[row][col] }}
+
+          </button>
+
+          }
+
+        </div>
+
+        }
+
+      </div>
+
+      <div class="action-buttons">
+
+        <button
+          class="secondary-btn"
+          (click)="undo()"
+          [disabled]="
+              game.moveHistory.length === 0 ||
+              game.status !== 1">
+
+          Undo
+
+        </button>
+
+        <button
+          class="secondary-btn"
+          (click)="resetGame()">
+          Reset Game
+        </button>
+
+        <button
+          class="danger-btn"
+          (click)="resetScoreboard()">
+          Reset Scoreboard
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="right-panel">
+
+      <div class="scoreboard-card">
+
+        <h3>Scoreboard</h3>
+
+        <div class="score-item">
+          <span>X Wins</span>
+          <strong>{{ scoreboard()?.xWins }}</strong>
+        </div>
+
+        <div class="score-item">
+          <span>O Wins</span>
+          <strong>{{ scoreboard()?.oWins }}</strong>
+        </div>
+
+        <div class="score-item">
+          <span>Draws</span>
+          <strong>{{ scoreboard()?.draws }}</strong>
+        </div>
+
+      </div>
+
+      <div class="history-card">
+
+        <h3>Move History</h3>
+
+        <div class="history-table">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Move</th>
+                <th>Player</th>
+                <th>Position</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+            @for(move of game.moveHistory; track move.moveNumber){
+
+              <tr>
+
+                <td>{{move.moveNumber}}</td>
+
+                <td>
+                  {{ move.player === 1 ? 'X' : 'O' }}
+                </td>
+
+                <td>
+                  ({{move.row + 1}},
+                  {{move.column + 1}})
+                </td>
+
+              </tr>
+
+            }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  }
+
+</div>
+    </div>
+</div>
