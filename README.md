@@ -117,7 +117,7 @@ dotnet restore
 Run the application:
 
 ```bash
-dotnet run
+dotnet run --launch-profile https
 ```
 
 The API will start and display the application URL in the console.
@@ -215,6 +215,14 @@ Request:
   "row": 0,
   "column": 0
 }
+```
+
+## API Testing
+
+A Visual Studio HTTP request collection is included:
+
+```text
+TicTacToe.Api.http
 ```
 
 ---

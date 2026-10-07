@@ -1,0 +1,89 @@
+@TicTacToe.Api_HostAddress = https://localhost:7074
+
+### Create Two Player Game
+
+POST {{TicTacToe.Api_HostAddress}}/api/games
+Content-Type: application/json
+
+{
+  "mode": 1
+}
+
+###
+
+### Create Computer Game
+
+POST {{TicTacToe.Api_HostAddress}}/api/games
+Content-Type: application/json
+
+{
+  "mode": 2
+}
+
+###
+
+### Get Game
+# Replace GAME_ID with actual id returned from Create Game
+
+GET {{TicTacToe.Api_HostAddress}}/api/games/GAME_ID
+
+###
+
+### Player X Move
+
+POST {{TicTacToe.Api_HostAddress}}/api/games/GAME_ID/moves
+Content-Type: application/json
+
+{
+  "player": 1,
+  "row": 0,
+  "column": 0
+}
+
+###
+
+### Player O Move
+
+POST {{TicTacToe.Api_HostAddress}}/api/games/GAME_ID/moves
+Content-Type: application/json
+
+{
+  "player": 2,
+  "row": 1,
+  "column": 1
+}
+
+###
+
+### Undo
+
+POST {{TicTacToe.Api_HostAddress}}/api/games/GAME_ID/undo
+Content-Type: application/json
+
+{}
+
+###
+
+### Reset Game
+
+POST {{TicTacToe.Api_HostAddress}}/api/games/GAME_ID/reset
+Content-Type: application/json
+
+{}
+
+###
+
+### Get Scoreboard
+
+GET {{TicTacToe.Api_HostAddress}}/api/scoreboard
+
+###
+
+### Reset Scoreboard
+
+POST {{TicTacToe.Api_HostAddress}}/api/scoreboard/reset
+Content-Type: application/json
+
+{}
+
+###
