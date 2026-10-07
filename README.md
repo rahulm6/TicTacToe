@@ -1,44 +1,27 @@
 # Tic Tac Toe
 
-## Project Overview
+## 1. Project Overview
 
-This project implements a browser-based Tic Tac Toe application using Angular 22 and .NET Web API.
+This project is a full-stack Tic Tac Toe application built using Angular 22 and .NET Web API.
 
-The application allows users to:
+The application supports:
 
-- Play Tic Tac Toe in Two Player Mode
-- Play against a Computer Opponent
-- Track Move History
-- Undo Moves
-- View and Reset Scoreboard
-- Detect Wins and Draws
-- Highlight Winning Cells
+- Two Player Mode
+- Computer Mode
+- Move History Tracking
+- Undo Functionality
+- Scoreboard Tracking
+- Win Detection
+- Draw Detection
+- Winning Cell Highlighting
 
-The backend acts as the source of truth and owns all game state, validation, move history, AI decisions, game status transitions, and scoreboard updates.
+The backend acts as the source of truth and owns all game state, validations, move history, AI decisions, and scoreboard management.
 
-The frontend communicates with the backend exclusively through REST APIs and renders the latest game state returned by the server.
+The frontend communicates with the backend through REST APIs and renders the current game state returned by the server.
 
 ---
 
-## Architecture
-
-```text
-+----------------------+
-| Angular 22 Frontend |
-+----------------------+
-          |
-          | REST API
-          |
-+----------------------+
-| .NET Web API        |
-+----------------------+
-          |
-          |
-+----------------------+
-| In-Memory Storage   |
-+----------------------+
-
-## Tech Stack
+## 2. Tech Stack
 
 ### Frontend
 
@@ -50,7 +33,7 @@ The frontend communicates with the backend exclusively through REST APIs and ren
 
 ### Backend
 
-- .NET Web API
+- .NET 10 Web API
 - C#
 - REST API Architecture
 
@@ -65,240 +48,59 @@ The frontend communicates with the backend exclusively through REST APIs and ren
 
 ---
 
-## Design Decisions
+## 3. Features Implemented
 
-### Backend as Source of Truth
+### Game Modes
 
-The backend owns all game state and business rules.
+✅ Two Player Mode
 
-Responsibilities include:
+✅ Computer Mode
 
-- Move validation
-- Turn management
-- Winner detection
-- Draw detection
-- Undo processing
-- Computer AI decisions
-- Scoreboard updates
+### Game Play
 
-The frontend acts purely as a presentation layer and renders the latest state returned by the API.
+✅ 3x3 Tic Tac Toe Board
 
----
+✅ Turn Validation
 
-### Separate Scoreboard Resource
+✅ Move Validation
 
-The scoreboard is exposed through dedicated endpoints:
+✅ Current Player Tracking
 
-```http
-GET /api/scoreboard
-POST /api/scoreboard/reset
-```
+✅ Win Detection
 
-Reason:
+✅ Draw Detection
 
-- Keeps scoreboard management independent from game sessions.
-- Avoids duplicating scoreboard data in every game response.
-- Follows better separation of concerns.
+✅ Winning Cell Highlighting
 
----
+### Move Tracking
 
-### Rule-Based Computer AI
+✅ Move History
 
-The AI follows the exact priority order specified in the requirements.
+✅ Move Number Tracking
 
-Priority order:
+### Undo Support
 
-1. Play a winning move if available.
-2. Block the opponent's winning move.
-3. Take the center position.
-4. Take an available corner.
-5. Take the first available position.
+✅ Undo for Two Player Mode
 
-This approach satisfies the assignment requirements while keeping the implementation simple and easy to explain during the review.
+✅ Undo for Computer Mode
 
----
+### Scoreboard
 
-### Undo Strategy
+✅ Track X Wins
 
-The application implements the required undo behavior.
+✅ Track O Wins
 
-#### Two Player Mode
+✅ Track Draws
 
-Undo removes only the most recent move.
+✅ Reset Scoreboard
 
-Example:
+### Testing
 
-```text
-X -> O -> Undo
-```
-
-Result:
-
-```text
-O move removed
-It becomes O's turn again
-```
-
-#### Computer Mode
-
-Undo removes both:
-
-- Computer's last move
-- Human player's previous move
-
-Example:
-
-```text
-X -> O (Computer) -> Undo
-```
-
-Result:
-
-```text
-Both moves removed
-It becomes X's turn again
-```
-
-#### Completion Strategy
-
-Option A was selected.
-
-```text
-Undo is disabled after the game is Won or Drawn.
-```
-
-Reason:
-
-- Keeps scoreboard consistent.
-- Prevents result rollback complexity.
-- Produces simpler and more reliable behavior.
+✅ Unit Tests for Core Game Logic
 
 ---
 
-## API Summary
-
-### Create Game
-
-```http
-POST /api/games
-```
-
-Creates a new game session.
-
-Request:
-
-```json
-{
-  "mode": 1
-}
-```
-
-Response:
-
-```json
-{
-  "id": "guid",
-  "mode": 1,
-  "board": [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""]
-  ]
-}
-```
-
----
-
-### Get Game State
-
-```http
-GET /api/games/{id}
-```
-
-Returns the latest game state.
-
----
-
-### Submit Move
-
-```http
-POST /api/games/{id}/moves
-```
-
-Request:
-
-```json
-{
-  "player": 1,
-  "row": 0,
-  "column": 0
-}
-```
-
-The backend validates:
-
-- Correct player turn
-- Valid board position
-- Empty cell
-- Game still in progress
-
----
-
-### Undo Move
-
-```http
-POST /api/games/{id}/undo
-```
-
-Applies undo according to the selected game mode.
-
----
-
-### Reset Game
-
-```http
-POST /api/games/{id}/reset
-```
-
-Resets:
-
-- Board
-- Move history
-- Winner state
-- Draw state
-- Current player
-
-Does NOT reset the scoreboard.
-
----
-
-### Get Scoreboard
-
-```http
-GET /api/scoreboard
-```
-
-Response:
-
-```json
-{
-  "xWins": 2,
-  "oWins": 1,
-  "draws": 3
-}
-```
-
----
-
-### Reset Scoreboard
-
-```http
-POST /api/scoreboard/reset
-```
-
-Resets all scoreboard counters to zero.
-
-## Run Backend
+## 4. How To Run The Backend Locally
 
 Navigate to the backend project:
 
@@ -318,7 +120,7 @@ Run the application:
 dotnet run
 ```
 
-The API will start and the console will display the application URL.
+The API will start and display the application URL in the console.
 
 Example:
 
@@ -326,7 +128,7 @@ Example:
 https://localhost:7074
 ```
 
-Swagger documentation can be accessed using:
+API documentation can be accessed using:
 
 ```text
 https://localhost:7074/swagger
@@ -334,7 +136,7 @@ https://localhost:7074/swagger
 
 ---
 
-## Run Frontend
+## 5. How To Run The Frontend Locally
 
 Navigate to the Angular application:
 
@@ -354,7 +156,7 @@ Run the application:
 ng serve
 ```
 
-Launch the application:
+Open:
 
 ```text
 http://localhost:4200
@@ -362,21 +164,121 @@ http://localhost:4200
 
 ---
 
-## Run Tests
+## 6. API Endpoint Summary
 
-Navigate to the solution root directory:
+### Create Game
+
+```http
+POST /api/games
+```
+
+Creates a new game.
+
+Request:
+
+```json
+{
+  "mode": 1
+}
+```
+
+Mode Values:
+
+```text
+1 = Two Player
+2 = Computer
+```
+
+---
+
+### Get Game
+
+```http
+GET /api/games/{id}
+```
+
+Returns the current game state.
+
+---
+
+### Submit Move
+
+```http
+POST /api/games/{id}/moves
+```
+
+Request:
+
+```json
+{
+  "player": 1,
+  "row": 0,
+  "column": 0
+}
+```
+
+---
+
+### Undo Move
+
+```http
+POST /api/games/{id}/undo
+```
+
+Undoes move(s) according to game mode.
+
+---
+
+### Reset Game
+
+```http
+POST /api/games/{id}/reset
+```
+
+Resets the board, move history and game status.
+
+---
+
+### Get Scoreboard
+
+```http
+GET /api/scoreboard
+```
+
+Returns current scoreboard values.
+
+---
+
+### Reset Scoreboard
+
+```http
+POST /api/scoreboard/reset
+```
+
+Resets all scoreboard counters.
+
+---
+
+## 7. How To Run Tests
+
+Navigate to the solution root:
 
 ```bash
 dotnet test
 ```
 
-All backend unit tests should pass successfully.
+Expected result:
+
+```text
+Passed
+Failed: 0
+```
 
 ---
 
 ## Test Coverage
 
-The solution includes backend unit tests covering core game functionality.
+The following scenarios are covered through unit tests:
 
 ### Game Rules
 
@@ -384,43 +286,31 @@ The solution includes backend unit tests covering core game functionality.
 
 ✅ Invalid Move
 
-✅ Move On Occupied Cell
+✅ Occupied Cell Validation
 
-✅ Wrong Player Turn
-
-✅ Move After Game Completion
-
----
+✅ Wrong Player Validation
 
 ### Turn Management
 
-✅ Correct Turn Switching
+✅ Turn Switching
 
 ✅ Current Player Tracking
 
----
-
 ### Winner Detection
 
-✅ Row Win Detection
+✅ Row Win
 
-✅ Column Win Detection
+✅ Column Win
 
-✅ Diagonal Win Detection
+✅ Diagonal Win
 
-✅ Winning Player Assignment
+✅ Winner Assignment
 
-✅ Winning Cells Identification
-
----
+✅ Winning Cell Identification
 
 ### Draw Detection
 
-✅ Full Board Draw Detection
-
-✅ Draw Scoreboard Update
-
----
+✅ Draw State Detection
 
 ### Undo Functionality
 
@@ -428,19 +318,15 @@ The solution includes backend unit tests covering core game functionality.
 
 ✅ Undo In Computer Mode
 
-✅ Move History Restoration
+### Scoreboard
 
-✅ Turn Restoration
+✅ X Win Counter
 
----
+✅ O Win Counter
 
-### Reset Functionality
+✅ Draw Counter
 
-✅ Reset Game
-
-✅ Reset Scoreboard
-
----
+✅ Scoreboard Reset
 
 ### Computer AI
 
@@ -452,133 +338,144 @@ The solution includes backend unit tests covering core game functionality.
 
 ✅ Corner Selection
 
-✅ Available Cell Selection
+---
+
+## 8. AI Tools And Prompt Summary
+
+AI assistance was used during development to:
+
+- Analyze requirements
+- Break requirements into implementation tasks
+- Generate initial API scaffolding
+- Generate DTO structures
+- Generate unit test ideas
+- Suggest Angular Signal patterns
+- Assist with README creation
+
+All generated code was manually reviewed, modified, tested, and validated before being included in the final solution.
 
 ---
 
-## Backend State Ownership
+## 9. Design Decisions
 
-The backend is implemented as the single source of truth.
+### Backend As Source Of Truth
 
-The following state is managed exclusively by the backend:
+The backend owns:
 
 - Board State
 - Current Player
 - Game Status
-- Winner
-- Winning Cells
+- Winner Detection
 - Move History
 - Undo Logic
-- Computer AI Decisions
-- Scoreboard
+- AI Decisions
+- Scoreboard State
 
-The frontend never calculates game outcomes or modifies game rules.
-
-All updates are performed through REST API calls.
+The frontend is responsible only for rendering data and invoking APIs.
 
 ---
 
-## Clarifications And Assumptions
+### Rule-Based Computer AI
+
+The AI follows the exact priority order specified in the assignment:
+
+1. Play winning move if available
+2. Block opponent winning move
+3. Take center
+4. Take corner
+5. Take first available position
+
+---
+
+### Separate Scoreboard Resource
+
+The scoreboard is exposed through its own API endpoints:
+
+```http
+GET /api/scoreboard
+POST /api/scoreboard/reset
+```
+
+This avoids duplicating scoreboard data inside every game response.
+
+---
+
+### Undo Strategy
+
+Selected Option A:
+
+```text
+Undo is disabled after the game reaches Won or Draw state.
+```
+
+Reason:
+
+- Keeps scoreboard results immutable
+- Simplifies logic
+- Avoids rollback complexity
+
+---
+
+### Thread Safety
+
+The repository uses:
+
+```csharp
+ConcurrentDictionary<Guid, Game>
+```
+
+instead of:
+
+```csharp
+Dictionary<Guid, Game>
+```
+
+because the repository is registered as a Singleton and may be accessed concurrently by multiple requests.
+
+---
+
+## 10. Clarifications And Assumptions
 
 ### Storage
 
-- In-memory storage is used as permitted by the assignment.
-- Data persistence across application restarts is not required.
-- Scoreboard values are maintained for the lifetime of the running application.
-
----
+- In-memory storage is used as allowed by the assignment.
+- Data persistence after application restart is not required.
 
 ### Game Sessions
 
-- Each game is uniquely identified using a Game ID.
-- Multiple game sessions can exist simultaneously in memory.
-- Each game maintains its own independent board state and move history.
-
----
+- Every game has a unique Game ID.
+- Multiple game sessions can coexist in memory.
 
 ### Computer Mode
 
-- Human player is always Player X.
-- Computer player is always Player O.
-- Computer moves are generated automatically after a valid human move.
-- Computer moves follow the priority sequence specified in the assignment.
-
----
+- Human player is always X.
+- Computer player is always O.
 
 ### Undo
 
-Selected approach:
+- Undo is disabled after Won or Draw state.
+- This behavior is a deliberate design choice.
 
-```text
-Option A - Disable Undo After Completion
-```
+### Scoreboard
 
-Undo is disabled after a game reaches:
-
-- Won
-- Draw
-
-This ensures scoreboard consistency and avoids result rollback complexity.
+- Scoreboard values are maintained in memory for the lifetime of the application.
 
 ---
 
-## AI Prompt Summary
+## 11. Known Limitations
 
-AI assistance was used during development for:
-
-- Requirement analysis
-- Architecture planning
-- API design suggestions
-- DTO generation
-- Unit test generation
-- Angular component scaffolding
-- Angular Signal recommendations
-- README generation assistance
-
-Generated content was manually reviewed, modified, tested and validated before inclusion in the final solution.
+- Game state is lost after application restart.
+- No persistent database storage.
+- No authentication or authorization.
+- No SignalR based multiplayer support.
+- No real-time synchronization between clients.
+- Computer opponent uses rule-based logic rather than Minimax.
+- Intended for local execution only.
+- Frontend unit tests were not implemented as the primary focus was validating business logic on the backend, where all game rules and state management reside.
 
 ---
 
-## Known Limitations
-
-### Storage
-
-- Game state is stored in memory.
-- All state is lost when the application stops.
-
----
-
-### Multiplayer
-
-- No real-time multiplayer synchronization.
-- No SignalR implementation.
-
----
-
-### Security
-
-- No authentication.
-- No authorization.
-
----
-
-### AI
-
-- Uses rule-based decision making.
-- Does not implement the Minimax algorithm.
-
----
-
-### Deployment
-
-- Intended for local execution.
-- No containerization configuration included.
-
----
-
-## Future Improvements
-
-Potential future enhancements include:
+## 12. Future Improvements
 
 ### Persistence
 
@@ -586,22 +483,15 @@ Potential future enhancements include:
 - SQL Server
 - Entity Framework Core
 
----
-
 ### Multiplayer
 
 - SignalR Integration
-- Real-time game synchronization
+- Real-time Game Synchronization
 
----
-
-### Computer AI
+### AI
 
 - Minimax Algorithm
 - Difficulty Levels
-- Advanced Strategy Evaluation
-
----
 
 ### Deployment
 
@@ -609,16 +499,12 @@ Potential future enhancements include:
 - Azure App Service Deployment
 - CI/CD Pipelines
 
----
-
 ### User Experience
 
 - Game Replay
 - Move Timeline Visualization
 - Sound Effects
 - Animations
-
----
 
 ### User Management
 
@@ -628,6 +514,19 @@ Potential future enhancements include:
 - Leaderboards
 
 ---
+
+## Architecture
+ 
+```text
+Angular Frontend
+|
+| REST APIs
+|
+.NET Web API
+|
+|
+In-Memory Repository
+```
 
 ## Screenshots
 
@@ -651,6 +550,17 @@ Potential future enhancements include:
 
 <img width="1646" height="1026" alt="image" src="https://github.com/user-attachments/assets/826e2323-4b00-42c0-9a4a-5d5682c01f8b" />
 
+---
+
+## Reviewer Notes
+
+This solution was intentionally designed with the backend acting as the source of truth.
+
+All game rules, state transitions, undo behavior, move history tracking, AI decisions, winner detection, draw detection, and scoreboard management are implemented on the server.
+
+The Angular frontend is a presentation layer responsible for rendering state returned by the REST APIs and providing user interaction.
+
+
 ## Submission Checklist
 
 ✅ Angular Frontend
@@ -667,23 +577,19 @@ Potential future enhancements include:
 
 ✅ Undo Functionality
 
-✅ Win Detection
+✅ Winner Detection
 
 ✅ Draw Detection
 
-✅ Highlight Winning Cells
+✅ Winning Cell Highlighting
 
 ✅ Scoreboard
-
-✅ Reset Game
-
-✅ Reset Scoreboard
 
 ✅ Unit Tests
 
 ✅ README Documentation
 
-✅ API Summary
+✅ API Documentation
 
 ✅ AI Prompt Summary
 

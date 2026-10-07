@@ -20,6 +20,4 @@ public class GameStateResponse
     public List<int> WinningCells { get; set; } = [];
 
     public List<Move> MoveHistory { get; set; } = [];
-
-    public Scoreboard? Scoreboard { get; set; }
 }
